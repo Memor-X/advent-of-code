@@ -1,0 +1,6 @@
+#files
+
+#folders
+_log/
+*/_log/
+*/merge_tickets
