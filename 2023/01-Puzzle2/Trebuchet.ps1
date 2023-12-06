@@ -34,20 +34,20 @@ function Get-Calibration($str)
     if($numWordFoundFirst -gt -1)
     {
         $numWord = $numWordsArr[$numWordFoundFirst]
-        $strFixed = $str.Replace($numWord, $numWords[$numWord])
+        $strFixed = $strFixed.Insert($strFixed.IndexOf($numWord),$numWords[$numWord])
     }
     if($numWordFoundLast -gt -1)
     {
         $numWord = $numWordsArr[$numWordFoundLast]
-        $strFixed = $strFixed.Replace($numWord, $numWords[$numWord])
+        $strFixed = $strFixed.Insert($strFixed.LastIndexOf($numWord),$numWords[$numWord].ToString())
     }
 
-    Write-Debug "$($str) => $($strFixed)"
+    #Write-Debug "$($str) => $($strFixed)"
     $extractedNum = ($strFixed -replace "[^0-9]" , '').ToString()
     $calNum = "$($extractedNum[0])$($extractedNum.substring($extractedNum.length - 1))"
 
-    Write-Debug "Extracted No.s = ${extractedNum}"
-    Write-Debug "Calibration No. = ${calNum}"
+    #Write-Debug "Extracted No.s = ${extractedNum}"
+    #Write-Debug "Calibration No. = ${calNum}"
 
     return $calNum
 }
