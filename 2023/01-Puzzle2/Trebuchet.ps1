@@ -3,7 +3,7 @@
 # File Name:	Trebuchet.ps1
 # Date Created:	06/12/2023
 # Description:	
-#	Advent of Code - Day 1 - Puzzle 1
+#	Advent of Code - Day 1 - Puzzle 2
 #
 ########################################
 
