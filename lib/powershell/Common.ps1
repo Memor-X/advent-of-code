@@ -78,6 +78,17 @@ function Bulk-Replace($string,$values)
     $updatesString
 }
 
+########################################
+#
+# Name:		FirstIndexOfAnyStr
+# Input:	$str <String> 
+#			$vals <Array>
+# Output:	$arrIndex <Integer>
+# Description:	
+#	looks up which value in an array of strings first appears in a string and returns the array index. 
+#   similar to IndexOfAny
+#
+########################################
 function FirstIndexOfAnyStr($str,$vals)
 {
     $arrIndex = -1
@@ -101,6 +112,16 @@ function FirstIndexOfAnyStr($str,$vals)
     return $arrIndex
 }
 
+########################################
+#
+# Name:		LastIndexOfAnyStr
+# Input:	$str <String> 
+#			$vals <Array>
+# Output:	$arrIndex <Integer>
+# Description:	
+#	looks up which value in an array of strings appears last in a string and returns the array index
+#
+########################################
 function LastIndexOfAnyStr($str,$vals)
 {
     $arrIndex = -1
