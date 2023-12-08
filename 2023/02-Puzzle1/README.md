@@ -29,3 +29,29 @@ In the example above, games 1, 2, and 5 would have been **possible** if the bag 
 Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. **What is the sum of the IDs of those games?**
 
 ## --- Approach ---
+- Importing Data
+    1. create an empty hash object to store the game data
+    2. create a hash object with red, green and blue as keys with values of 0 to use as a template
+    3. for each line of input
+        1. split the string from the :
+        2. remove "Game " from the resulting array[0], trim any whitespace and store as the game ID
+        3. split array[1] by the ; to create an array of sets
+        4. for each set
+            1. clone the rgb hash template made at the start
+            2. split the set by , to get an array of cubes
+            3. for each cube
+                1. trim and split the sub by the single space between. the result should be a number at array[0] and the color at array[1]
+                2. update the cloned template using array[1] as the key and array[0] as the value, casting array[0] as an integer
+            4. add the cloned template to game data hash object
+
+- Solution
+    1. create an empty array to store possible games
+    2. for each game
+        1. create a hash object with red, blue and green as keys who's values are 0
+        2. for each set
+            1. for each color
+                1. if the value of the color is greater than what is in the hash object, update the number
+        3. store the resulting max values
+        4. check the max values against the criteria
+        5. if all max values are equal too or under the criteria, add the game id to the possible games array
+    3. loop though array of possible games, summing together
