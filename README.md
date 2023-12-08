@@ -10,3 +10,5 @@ Memor-X's Public Advent of Code Solutions
 - 02
 	- [Puzzle 1](2023/02-Puzzle1)<br>
 	Answer: 2162
+	- [Puzzle 2](2023/02-Puzzle2)<br>
+	Answer: 72513
