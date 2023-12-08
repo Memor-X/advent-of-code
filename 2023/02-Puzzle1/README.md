@@ -34,14 +34,14 @@ Determine which games would have been possible if the bag had been loaded with o
     2. create a hash object with red, green and blue as keys with values of 0 to use as a template
     3. for each line of input
         1. split the string from the :
-        2. remove "Game " from the resulting array[0], trim any whitespace and store as the game ID
-        3. split array[1] by the ; to create an array of sets
+        2. remove "Game " from the resulting `array[0]`, trim any whitespace and store as the game ID
+        3. split `array[1]` by the ; to create an array of sets
         4. for each set
             1. clone the rgb hash template made at the start
             2. split the set by , to get an array of cubes
             3. for each cube
-                1. trim and split the sub by the single space between. the result should be a number at array[0] and the color at array[1]
-                2. update the cloned template using array[1] as the key and array[0] as the value, casting array[0] as an integer
+                1. trim and split the sub by the single space between. the result should be a number at `array[0]` and the color at `array[1]`
+                2. update the cloned template using `array[1]` as the key and `array[0]` as the value, casting `array[0]` as an integer
             4. add the cloned template to game data hash object
 
 - Solution
