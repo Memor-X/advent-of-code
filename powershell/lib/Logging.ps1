@@ -134,6 +134,25 @@ function Write-Debug($msg,$indents=0)
     }
 }
 
+########################################
+#
+# Name:		Write-Hash-Debug
+# Input:	$hashObj <Hash Object> [Optional: Default Val]
+# Output:	Screen Output (Via Write-Log)
+# Description:	
+#	Outputs $hashObj Keys and Values using Write-Debug
+#
+########################################
+function Write-Hash-Debug($hashObj)
+{
+    # turns hash into string array
+    $store = Gen-Hash-Block $hashObj
+
+    # generates the logging block before outputting as debug
+    $msgBlock = Gen-Block "Hash Object" $store
+    Write-Debug $msgBlock
+}
+
 
 ########################################
 #
@@ -166,8 +185,11 @@ function Write-Start()
 ########################################
 function Write-End()
 {
+    # gets current time (assuming this is the last function to be called)
     $endTime = Get-Date
     Write-Debug "End Time = ${endTime}"
+
+    # calculates difference between store start time and stored end time
     $duration = $endTime - $startTime
     Write-Success "Script End. Runtime = $($duration.TotalSeconds)"
 }
@@ -248,4 +270,63 @@ function Gen-Block($title,$msgs)
 
     #returns the array
     return $logBlock
+}
+
+########################################
+#
+# Name:		
+# Input:	$obj <Hash Object>
+#			$level <int>
+# Output:	$returnArr <Array>
+# Description:	
+#	Generates an array of strings which represents the parsed Hash Object. similar to Gen-Block
+#
+########################################
+function Gen-Hash-Block($obj,$level=0)
+{
+    # initalize values
+    $returnArr = @()
+    $tabs = ""
+
+    # generate tab character prefix depending on level
+    if($level -gt 0)
+    {
+        for($i = 0; $i -lt $level; $i++)
+        {
+            $tabs += "`t"
+        }
+    }
+    
+    # loop through all keys
+    foreach($key in $obj.Keys)
+    {
+        # checks datatype of the value
+        switch ($obj[$key].GetType().Name)
+        {
+            # if array, loop though items
+            "Object[]" {
+                $returnArr += @("${tabs}$($key) = [Array]")
+                foreach($val in $obj[$key])
+                {
+                    $returnArr += @("${tabs}`t$($val)")
+                }
+                
+                Break
+            }
+            # if hash table, recurvice call the function for the next level
+            "Hashtable" {
+                $returnArr += @("${tabs}$($key) = [Hash]")
+                $returnArr += Gen-Hash-Block $obj[$key] ($level + 1)
+                Break
+            }
+            default {
+                $returnArr += @("${tabs}$($key) = [$($obj[$key].GetType().Name)] $($obj[$key])")
+                Break
+            }
+        }
+        
+    }
+
+    #returns the array
+    return $returnArr
 }

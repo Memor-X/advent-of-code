@@ -1,33 +1,36 @@
 ########################################
 #
 # File Name:	Game.ps1
-# Date Created:	07/12/2023
+# Date Created:	08/12/2023
 # Description:	
-#	Advent of Code - Day 2 - Puzzle 1
+#	Advent of Code - Day 2 - Puzzle 2
 #
 ########################################
 
 # file imports
-. "$($PSScriptRoot)\..\..\lib\powershell\Common.ps1"
+. "$($PSScriptRoot)\..\..\lib\Common.ps1"
 
 # Local Function
-function Total-Game($game)
+function Min-Game($game)
 {
-    $total = @{
-        "red" = 0
-        "blue" = 0
-        "green" = 0
+    $min = @{
+        "red" = 999999
+        "blue" = 999999
+        "green" = 999999
     }
 
     foreach($set in $game)
     {
         foreach($color in $set.GetEnumerator())
         {
-            $total.($color.Name) += $color.Value
+            if($color.Value -gt 0 -and $color.Value -lt $min.($color.Name))
+            {
+                $min.($color.Name) = $color.Value
+            }
         }
     }
 
-    return $total
+    return $min
 }
 
 function Max-Game($game)
@@ -104,32 +107,33 @@ $criteria = @{
     "blue" = 14
 }
 $games = $gameData.Keys
-$matchesGames = @()
+$gamePowers = @()
 
-Write-Log "Checking Game Data for matches"
+Write-Log "Calculating 'power' for games"
 foreach($gameID in $games)
 {
     Write-Log "Maxing Game $($gameID)"
-    $gameMax = Max-Game $gameData.$gameID
+    $gameMmax = Max-Game $gameData.$gameID
+    #$outputblock = @(
+    #    "Red = $($gameMmax.red)"
+    #    "Green = $($gameMmax.green)"
+    #    "Blue = $($gameMmax.blue)"
+    #)
+    #Write-Debug (Gen-Block "Game $($gameID) Data" $outputblock)
     
-    if($gameMax.red -le $criteria.red -and $gameMax.blue -le $criteria.blue -and $gameMax.green -le $criteria.green)
-    {
-        Write-Log "Game $($gameID) Matched"
-        Write-Log "Red: $($gameMax.red)"
-        Write-Log "Green: $($gameMax.green)"
-        Write-Log "Blue: $($gameMax.blue)"
-
-        $matchesGames += @($gameID)
-    }
+    Write-Log "Calculating Power"
+    $power = $gameMmax.red * $gameMmax.green * $gameMmax.blue
+    #Write-Debug "Game $($gameID) Power = $($power)"
+    $GamePowers += @($power)
 }
 
-Write-Log "Summing Game IDs"
+Write-Log "Summing Game powers"
 $gameSum = 0
-foreach($val in $matchesGames)
+foreach($val in $GamePowers)
 {
     $gameSum += $val
 }
 
-Write-Success "AoC Day 2-1 Answer: ${gameSum}"
+Write-Success "AoC Day 2-2 Answer: ${gameSum}"
 
 Write-End

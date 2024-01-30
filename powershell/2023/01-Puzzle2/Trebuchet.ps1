@@ -8,7 +8,7 @@
 ########################################
 
 # File Imports
-. "$($PSScriptRoot)\..\..\lib\powershell\Common.ps1"
+. "$($PSScriptRoot)\..\..\lib\Common.ps1"
 
 # Local Function
 function Get-Calibration($str)
