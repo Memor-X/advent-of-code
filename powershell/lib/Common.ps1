@@ -9,6 +9,7 @@
 
 # file imports
 . "$($PSScriptRoot)\Logging.ps1"
+. "$($PSScriptRoot)\Data.ps1"
 
 ########################################
 #
@@ -199,29 +200,6 @@ Function Test-Function-Loop($commands, $crash=$true)
         Write-Debug "testing ${command}"
         Test-Function-Exists $command $crash
     }
-}
-
-########################################
-# Data Convertion
-########################################
-########################################
-#
-# Name:		Hash-To-Array
-# Input:	$hash <Hash Object>
-# Output:	$returnArr <Array>
-# Description:	
-#	converts a Hash object into an Array of Strings formatted as "key = value"
-#
-########################################
-Function Hash-To-Array($hash)
-{
-    $returnArr = @()
-    foreach($key in $hash.Keys)
-    {
-        $returnArr += @("$($key) = $($hash[$key])")
-    }
-
-    return $returnArr
 }
 
 ########################################

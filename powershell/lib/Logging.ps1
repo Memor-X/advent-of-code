@@ -15,6 +15,9 @@ if($global:logSetting -eq $null)
         "showError" = $true
         "showWarning" = $true
         "showDebug" = $true
+        "fileOutput" = $false
+        "dir" = ".\_log"
+        "filename" = "log_$(Get-Date -UFormat "%m-%d-%Y").txt"
     };
 }
 if($global:startTime -eq $null)
@@ -57,7 +60,17 @@ function Write-Log($msg,$indents=0,$color="DarkGray",$key="LOG")
         # loops though message object and outputs
         foreach($msgLine in $msgArray)
         {
-            Write-Host "${prefix} | $($msgLine.PadLeft($msgLine.Length + $indents,"`t"))" -ForegroundColor $color
+            $msgLine = [string]$msgLine
+            $logLine = "${prefix} | $($msgLine.PadLeft($msgLine.Length + $indents,"`t"))"
+            Write-Host $logLine -ForegroundColor $color
+            if($logSetting.fileOutput -eq $true)
+            {
+                if((Test-Path -Path $logSetting.dir) -eq $false)
+                {
+                    New-Item -ItemType Directory -Force -Path $logSetting.dir
+                }
+                Add-Content -Path "$($logSetting.dir)\$($logSetting.filename)" -Value $logLine
+            }
         }
     }
 }
