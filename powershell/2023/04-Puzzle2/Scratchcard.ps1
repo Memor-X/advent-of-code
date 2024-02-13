@@ -3,7 +3,7 @@
 # File Name:	Scratchcard.ps1
 # Date Created:	12/02/2024
 # Description:	
-#	Advent of Code - Day 4 - Puzzle 1
+#	Advent of Code - Day 4 - Puzzle 2
 #
 ########################################
 
@@ -11,7 +11,7 @@
 . "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
 
 # Global Varible Setting
-$global:AoC.puzzle = "4-1"
+$global:AoC.puzzle = "4-2"
 $global:AoC.testInputMode = $false
 
 $global:logSetting.fileOutput = $true
@@ -25,6 +25,8 @@ $global:logSetting.showDebug = $true
 Write-Start
 $cards = Load-Input
 $scratchcards = @()
+$extraCards = Initalize-Array $cards.length 0
+#Write-Host $extraCards
 
 for($i = 0; $i -lt $cards.length; $i += 1)
 {
@@ -33,7 +35,6 @@ for($i = 0; $i -lt $cards.length; $i += 1)
 
     $numbers = $numbers.Replace("  "," ").Trim()
     $card = $card.Trim()
-    $score = 0
 
     Write-Log "Splitting Numbers - $($numbers)"
     $winningNumbers, $obtainedNumbers = ($numbers.Split('|'))
@@ -41,19 +42,24 @@ for($i = 0; $i -lt $cards.length; $i += 1)
     $obtainedNumbers = $obtainedNumbers.Trim().Split(' ')
     $noMatched = Count-Array-Matches $obtainedNumbers $winningNumbers
 
-    if($noMatched -gt 0)
+    $cardCount = 0
+    Write-Log "$($card) has $($noMatched) wins"
+    for($copies = 0; $copies -lt $extraCards[$i]+1; $copies += 1)
     {
-        Write-Log "$($card) as $($noMatched) wins. calculating"
-        $score = 1
-        $noMatched -= 1
-        for($j = 0; $j -lt $noMatched; $j += 1)
+        #Write-Log "Processing $($card) #$($copies+1)"
+        $cardCount += 1
+        for($wins = 0; $wins -lt $noMatched; $wins += 1)
         {
-            $score *= 2
+            $cardCopyNum = $i+($wins+1)
+            if($cardCopyNum -lt $extraCards.length)
+            {
+                $extraCards[$cardCopyNum] += 1
+            }
         }
-
-        Write-Log "Adding to Collection"
-        $scratchcards += @($score)
     }
+
+    Write-Log "Adding $($cardCount) x $($card)'s to Collection"
+    $scratchcards += @($cardCount)
 
     #Write-Debug $card
     #Write-Debug $score

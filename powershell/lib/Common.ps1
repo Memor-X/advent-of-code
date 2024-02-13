@@ -204,91 +204,48 @@ Function Test-Function-Loop($commands, $crash=$true)
 
 ########################################
 #
-# Name:		JsonObj-To-Hash
-# Input:	$jsonObj <Object>
-# Output:	$returnHash <Hash Object>
+# Name:		Count-Array-Matches
+# Input:	$collection <Array>
+#			$toFind <Array>
+# Output:	$matches <Int>
 # Description:	
-#	converts a JSON object into an Hash Object
+#	counts the number of times elements in $toFind appear in $collection
 #
 ########################################
-Function JsonObj-To-Hash($jsonObj)
+function Count-Array-Matches($collection, $toFind)
 {
-    $returnHash = @{}
-    foreach ($property in $jsonObj.PSObject.Properties) 
+    $matches = 0
+    foreach($val in $toFind)
     {
-        $returnHash[$property.Name] = $property.Value
+        if ($collection.Contains($val) -eq $true) 
+        {
+            $matches += 1
+        }
     }
-    return $returnHash
+    
+    return $matches
 }
 
 ########################################
 #
-# Name:		NameValueCollection-To-Array
-# Input:	$coll <Object - NameValueCollection>
-# Output:	$returnArr <Array>
+# Name:		Initalize-Array
+# Input:	$size <Integer> [Optional: 1]
+#			$initalVal <Array> [Optional: Array[0]=$null ]
+# Output:	$newArray <Array>
 # Description:	
-#	converts a NameValueCollection object into an Array of Strings formatted as "key = value"
+#	create an array of size specified by $size filling it with the inital value specified 
+#   by $initalVal
 #
 ########################################
-Function NameValueCollection-To-Array($coll)
+function Initalize-Array($size=1,$initalVal=@($null))
 {
-    $returnArr = @()
-
-    foreach($key in $coll.Keys)
+    Write-Log "Initalizing Array of size $($size) with inital value of $($initalVal)"
+    $newArray = @($initalVal)
+    for($arrayPointer = 0; $arrayPointer -lt $size; $arrayPointer += 1)
     {
-        # checks if an array and if so loops through all the elements of it
-        if($coll.GetValues($key).GetType().BaseType.Name -eq "Array")
-        {
-            foreach($arrItem in $coll.GetValues($key))
-            {
-                $returnArr += @("$($key) = $($arrItem)")
-            }
-        }
-        else
-        {
-            $returnArr += @("$($key) = $($coll.GetValues($key))")
-        }
+        $newArray += @($initalVal)
     }
-
-    return $returnArr
-}
-
-########################################
-#
-# Name:		String-to-TimeSpan
-# Input:	$timeString <String>
-# Output:	$timeSpan <Object - Timespan>
-# Description:	
-#	converts a : seperated string to be a Timespan Object
-#
-########################################
-Function String-to-TimeSpan($timeString)
-{
-    # splits the string into time components
-    $split = $timeString -split ":"
-
-    # checks how many time components we are working with assuming order will always be Days > Hours > Minuites > Seconds
-    switch ($split.Count)
-    {
-        1 {
-            $timespan = New-TimeSpan -Seconds ([int]($split[0]))
-            Break
-        }
-        2 {
-            $timespan = New-TimeSpan -Minutes ([int]($split[0])) -Seconds ([int]($split[1]))
-            Break
-        }
-        4 {
-            $timespan = New-TimeSpan -Days ([int]($split[0])) -Hours ([int]($split[1])) -Minutes ([int]($split[2])) -Seconds ([int]($split[3]))
-            Break
-        }
-        default {
-            $timespan = New-TimeSpan -Hours ([int]($split[0])) -Minutes ([int]($split[1])) -Seconds ([int]($split[2]))
-            Break
-        }
-    }
-
-    return $timeSpan
+    return $newArray
 }
 
 ########################################
