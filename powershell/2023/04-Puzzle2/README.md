@@ -1,4 +1,4 @@
-# --- [Day 4: Scratchcards](https://adventofcode.com/2023/day/3) ---
+# --- [Day 4: Scratchcards](https://adventofcode.com/2023/day/4) ---
 ## --- Part Two ---
 Just as you're about to report your findings to the Elf, one of you realizes that the rules have actually been printed on the back of every card this whole time.
 
