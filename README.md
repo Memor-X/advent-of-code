@@ -12,4 +12,6 @@ Memor-X's Public Advent of Code Solutions
 | | 2 | 67779080 | ![Powershell Static Badge](https://img.shields.io/badge/Powershell-012456?style=for-the-badge&logo=powershell) | [Link](powershell/2023/03-Puzzle2) |
 | [04](https://adventofcode.com/2023/day/4) | 1 | 22674 | ![Powershell Static Badge](https://img.shields.io/badge/Powershell-012456?style=for-the-badge&logo=powershell) | [Link](powershell/2023/04-Puzzle1) 
 | | 2 | 5747443 | ![Powershell Static Badge](https://img.shields.io/badge/Powershell-012456?style=for-the-badge&logo=powershell) | [Link](powershell/2023/04-Puzzle2) |
+| [05](https://adventofcode.com/2023/day/5) | 1 | 322500873 | ![Powershell Static Badge](https://img.shields.io/badge/Powershell-012456?style=for-the-badge&logo=powershell) | [Link](powershell/2023/05-Puzzle1) 
+| | 2 |  | ![Powershell Static Badge](https://img.shields.io/badge/Powershell-012456?style=for-the-badge&logo=powershell) | [Link](powershell/2023/05-Puzzle2) |
 

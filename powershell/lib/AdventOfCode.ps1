@@ -55,7 +55,7 @@ function Load-Input()
 
     Write-Log "Loading Data from - $($filename)"
     $inputData = Get-Content $filename
-    Write-Debug (Gen-Block "Input Data" $data)
+    Write-Debug (Gen-Block "Input Data" $inputData)
     return $inputData
 }
 
@@ -69,24 +69,36 @@ function Load-Input()
 #   caculated for debugging
 #
 ########################################
-function Get-Answer($collection)
+function Get-Answer($collection,$calc="sum")
 {
     # Saving log settings to restore
     $logSettingRetain = $global:logSetting
     $global:logSetting.showLog = $true
     $global:logSetting.showDebug = $true
     
-    Write-Debug (Gen-Block "Parts to Sum" (@("Collection Size = $($collection.Count)") + $collection))
+    Write-Debug (Gen-Block "Values to Calculate" (@("Collection Size = $($collection.Count)") + $collection))
 
     # Restoring log settings
     $global:logSetting = $logSettingRetain
 
-    Write-Log "Summing Collection"
-    $sum = 0
-    foreach($val in $collection)
-    {
-        $sum += $val
-    }
+    # Output data to external file
+    Write-File ".\Answer-Data.txt" ($collection -join "`n")
 
-    Write-Success "AoC Day $($global:AoC.puzzle) Answer: ${sum}"
+    Write-Log "Calculating Collection - $($calc)"
+    $answer = 0
+    Switch($calc)
+    {
+        "sum" {
+            $answer = (Sum $collection)
+            break
+        }
+        "min"
+        {
+            $answer = (Min $collection)
+            break
+        }
+    }
+    
+
+    Write-Success "AoC Day $($global:AoC.puzzle) Answer: ${answer}"
 }

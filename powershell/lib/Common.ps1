@@ -10,6 +10,7 @@
 # file imports
 . "$($PSScriptRoot)\Logging.ps1"
 . "$($PSScriptRoot)\Data.ps1"
+. "$($PSScriptRoot)\Maths.ps1"
 
 ########################################
 #

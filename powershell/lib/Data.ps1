@@ -52,8 +52,8 @@ Function Hash-To-Array($hash)
 ########################################
 function String-To-Int($str)
 {
-    [int]$retunVal 
-    $retunVal = [convert]::ToInt32($str, 10)
+    #Write-Debug "String to convert - $($str)"
+    [int64]$retunVal = [convert]::ToInt64($str, 10)
     return $retunVal 
 }
 
