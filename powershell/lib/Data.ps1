@@ -13,8 +13,25 @@
 ########################################
 # Data Type Checking
 ########################################
+########################################
+#
+# Name:		Is-Digit
+# Input:	$char <String>
+# Output:	<Boolean>
+# Description:	
+#	checks if the supplied character is a digit
+#
+########################################
 Function Is-Digit($char)
 {
+    if($char.GetType().Name -ne "String")
+    {
+        return $false
+    }
+    if($char.Length -gt 1)
+    {
+        return $false
+    }
     return ($char -match "^\d+$")
 }
 
@@ -33,7 +50,7 @@ Function Is-Digit($char)
 Function Hash-To-Array($hash)
 {
     $returnArr = @()
-    foreach($key in $hash.Keys)
+    foreach($key in ($hash.Keys | Sort-Object))
     {
         $returnArr += @("$($key) = $($hash[$key])")
     }
@@ -99,10 +116,6 @@ Function NameValueCollection-To-Array($coll)
                 $returnArr += @("$($key) = $($arrItem)")
             }
         }
-        else
-        {
-            $returnArr += @("$($key) = $($coll.GetValues($key))")
-        }
     }
 
     return $returnArr
@@ -144,4 +157,20 @@ Function String-to-TimeSpan($timeString)
     }
 
     return $timeSpan
+}
+
+########################################
+#
+# Name:		Timestamp-to-DateTime
+# Input:	$unixTimestamp <String>
+# Output:	$dateObj <Object - DateTime>
+# Description:	
+#	Converts a Unix Timestamp into a Date Time Object
+#
+########################################
+function Timestamp-to-DateTime($unixTimestamp)
+{
+    $dateObj = New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0
+    $dateObj = $dateObj.AddSeconds($unixTimestamp)
+    return $dateObj 
 }

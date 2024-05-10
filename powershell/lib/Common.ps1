@@ -149,6 +149,56 @@ function LastIndexOfAnyStr($str,$vals)
 
 ########################################
 #
+# Name:		Find-Bell
+# Input:	str <String>
+# Output:	$pos <Integer>
+# Description:	
+#	find the first instance of the invisible Bell character (U+0007) and returns the internet
+#
+########################################
+function Find-Bell($str)
+{
+    $pos = -1
+    if($str.length -gt 0)
+    {
+        $pos = $string.IndexOf([char]7)
+    }
+    return $pos
+}
+
+########################################
+#
+# Name:		Repair-Trim
+# Input:	$str <String>
+# Output:	$returnStr <String>
+# Description:	
+#	Does a regular Trim and also trims off other characters such as the Bell Character (U+0007)
+#
+########################################
+Function Repair-Trim($str)
+{
+    $trimChars = @(([char]0), ([char]1), ([char]2), ([char]3), ([char]4), ([char]7), ([char]32))
+    $returnStr = $str
+    
+    $charIndex = 0
+    while($trimChars.Contains($returnStr[$charIndex]) -eq $true)
+    {
+        $charIndex += 1
+    }
+    $returnStr = $returnStr.Remove(0,$charIndex)
+
+    $charIndex = $returnStr.Length
+    while($trimChars.Contains($returnStr[$charIndex-1]))
+    {
+        $charIndex -= 1
+    }
+    $returnStr = $returnStr.Remove($charIndex,$returnStr.Length-$charIndex)
+
+    return $returnStr
+}
+
+########################################
+#
 # Name:		Test-Function-Exists
 # Input:	$command <String>
 # Output:	N/A
@@ -241,12 +291,67 @@ function Count-Array-Matches($collection, $toFind)
 function Initalize-Array($size=1,$initalVal=@($null))
 {
     Write-Log "Initalizing Array of size $($size) with inital value of $($initalVal)"
-    $newArray = @($initalVal)
-    for($arrayPointer = 0; $arrayPointer -lt $size; $arrayPointer += 1)
+    $newArray = @($null)
+    $insertVal = @($initalVal)
+    if(@($initalVal).Length -gt 1)
     {
-        $newArray += @($initalVal)
+        $insertVal = $initalVal[0]
+    }
+    $newArray[0] = $insertVal
+
+    for($arrayPointer = 1; $arrayPointer -lt $size; $arrayPointer += 1)
+    {
+        if(@($initalVal).Length -gt 1)
+        {
+            $index = $arrayPointer % $initalVal.Length
+            $insertVal = $initalVal[$index]
+        }
+        $newArray += @($insertVal)
     }
     return $newArray
+}
+
+########################################
+#
+# Name:		Group-Replace
+# Input:	$string <String>
+#			$findArr <Array>
+#           $replaceStr <String>
+# Output:	$returnStr <String>
+# Description:	
+#	Does .Replace but using an array of items to find
+#
+########################################
+function Group-Replace($string,$findArr,$replaceStr)
+{
+    $returnStr = $string
+    foreach($findVal in $findArr)
+    {
+        $returnStr = $returnStr.Replace($findVal,$replaceStr)
+    }
+    return $returnStr
+}
+
+########################################
+#
+# Name:		Get-Version
+# Input:	$str <String>
+#           $delimiter <String> [Optional: .]
+# Output:	$versionObj <Hash Object>
+# Description:	
+#	pulls apart a version number string and returns it as a hash object of integers
+#
+########################################
+function Get-Version($str,$delimiter='[.]')
+{
+    $versionSplit = $str -split $delimiter
+    $versionObj = @{
+        "major" = (String-To-Int $versionSplit[0].Trim())
+        "minor" = (String-To-Int $versionSplit[1].Trim())
+        "bug" = (String-To-Int $versionSplit[2].Trim())
+    }
+
+    return $versionObj 
 }
 
 ########################################

@@ -150,7 +150,7 @@ function Write-Debug($msg,$indents=0)
 ########################################
 #
 # Name:		Write-Hash-Debug
-# Input:	$hashObj <Hash Object> [Optional: Default Val]
+# Input:	$hashObj <Hash Object>
 # Output:	Screen Output (Via Write-Log)
 # Description:	
 #	Outputs $hashObj Keys and Values using Write-Debug
@@ -311,7 +311,7 @@ function Gen-Hash-Block($obj,$level=0)
     }
     
     # loop through all keys
-    foreach($key in $obj.Keys)
+    foreach($key in ($obj.Keys | Sort-Object))
     {
         # checks datatype of the value
         switch ($obj[$key].GetType().Name)
@@ -321,7 +321,7 @@ function Gen-Hash-Block($obj,$level=0)
                 $returnArr += @("${tabs}$($key) = [Array]")
                 foreach($val in $obj[$key])
                 {
-                    $returnArr += @("${tabs}`t$($val)")
+                    $returnArr += @("${tabs}`t[$($val.GetType().Name)] $($val)")
                 }
                 
                 Break
