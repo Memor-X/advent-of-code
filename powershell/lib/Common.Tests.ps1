@@ -351,7 +351,7 @@ Describe 'Initalize-Array'{
         $newArray[9] | Should -Be "hello"
     }
 
-    It 'New 2-size array with defaults "hello" and "world"' {
+    It 'New 2-size array with defaults hello and world' {
         $newArray = Initalize-Array 2 @("hello", "world")
         $newArray.Length | Should -Be 2
         $newArray[0] | Should -Be "hello"
@@ -464,6 +464,63 @@ Describe 'Get-Version'{
         $version."major" | Should -Be 1
         $version."minor" | Should -Be 2
         $version."bug" | Should -Be 3
+    }
+
+}
+
+Describe 'Merge-Hash'{
+    BeforeEach{
+        $global:outputBuffer = @{}
+        $outputBuffer."screen" = @()
+    }
+
+    It 'merges 2 hash objects with different keys' {
+        $hash1 = @{"key 1" = "val 1"}
+        $hash2 = @{"key 2" = "val 2"}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1" | Should -Be "val 1"
+        $mergedHash."key 2" | Should -Be "val 2"
+    }
+    It 'merges 2 hash objects with identical keys' {
+        $hash1 = @{"key 1" = "val 1"}
+        $hash2 = @{"key 1" = "val 2"}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1"[0] | Should -Be "val 1"
+        $mergedHash."key 1"[1] | Should -Be "val 2"
+    }
+    It 'merges 2 hash objects with identical keys with one array value' {
+        $hash1 = @{"key 1" = "val 1"}
+        $hash2 = @{"key 1" = @("val 2", "val 3")}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1"[0] | Should -Be "val 1"
+        $mergedHash."key 1"[1] | Should -Be "val 2"
+        $mergedHash."key 1"[2] | Should -Be "val 3"
+    }
+    It 'merges 2 hash objects with identical keys with two array values' {
+        $hash1 = @{"key 1" = @("val 1", "val 4")}
+        $hash2 = @{"key 1" = @("val 2", "val 3")}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1"[0] | Should -Be "val 1"
+        $mergedHash."key 1"[1] | Should -Be "val 4"
+        $mergedHash."key 1"[2] | Should -Be "val 2"
+        $mergedHash."key 1"[3] | Should -Be "val 3"
+    }
+    It 'merges 2 hash objects with identical keys with one hash value' {
+        $hash1 = @{"key 1" = "val 1"}
+        $hash2 = @{"key 1" = @{"subkey1" = "val 2"; "subkey2" = "val 3"}}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1"[0] | Should -Be "val 1"
+        $mergedHash."key 1"[1]."subkey1" | Should -Be "val 2"
+        $mergedHash."key 1"[1]."subkey2" | Should -Be "val 3"
+    }
+    It 'merges 2 hash objects with identical keys with two hash values' {
+        $hash1 = @{"key 1" = @{"subkey3" = "val 1"; "subkey4" = "val 4"}}
+        $hash2 = @{"key 1" = @{"subkey1" = "val 2"; "subkey2" = "val 3"}}
+        $mergedHash = Merge-Hash $hash1 $hash2
+        $mergedHash."key 1"[0]."subkey3" | Should -Be "val 1"
+        $mergedHash."key 1"[0]."subkey4" | Should -Be "val 4"
+        $mergedHash."key 1"[1]."subkey1" | Should -Be "val 2"
+        $mergedHash."key 1"[1]."subkey2" | Should -Be "val 3"
     }
 
 }

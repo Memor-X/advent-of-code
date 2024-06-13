@@ -355,6 +355,35 @@ function Get-Version($str,$delimiter='[.]')
 }
 
 ########################################
+#
+# Name:		Merge-Hash
+# Input:	$hash1 <Hash Object>
+#			$hash2 <Hash Object>
+# Output:	$returnHash <Various>
+# Description:	
+#	returns the XML Element specified by the passed dot seperated path
+#
+########################################
+function Merge-Hash($hash1,$hash2)
+{
+    $returnHash = $hash1
+    foreach($key in $hash2.Keys)
+    {
+        if($returnHash.ContainsKey($key))
+        {
+            $combinedVal = @($returnHash.$key)
+            $combinedVal += @($hash2.$key)
+            $returnHash.$key = $combinedVal
+        }
+        else
+        {
+            $returnHash += $hash2
+        }
+    }
+    return $returnHash
+}
+
+########################################
 # File I/O
 ########################################
 ########################################
