@@ -7,55 +7,19 @@
 #
 ########################################
 
-# file imports
-. "$($PSScriptRoot)\..\..\lib\Common.ps1"
+# File Imports
+. "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
+. "$($PSScriptRoot)\lib\LocalLib.ps1"
 
-# Local Function
-function Total-Game($game)
-{
-    $total = @{
-        "red" = 0
-        "blue" = 0
-        "green" = 0
-    }
+# Global Varible Setting
+$global:AoC.puzzle = "2-1"
+$global:AoC.testInputMode = $false
 
-    foreach($set in $game)
-    {
-        foreach($color in $set.GetEnumerator())
-        {
-            $total.($color.Name) += $color.Value
-        }
-    }
-
-    return $total
-}
-
-function Max-Game($game)
-{
-    $max = @{
-        "red" = 0
-        "blue" = 0
-        "green" = 0
-    }
-
-    foreach($set in $game)
-    {
-        foreach($color in $set.GetEnumerator())
-        {
-            if($color.Value -gt $max.($color.Name))
-            {
-                $max.($color.Name) = $color.Value
-            }
-        }
-    }
-
-    return $max
-}
+$global:logSetting.fileOutput = $true
+$global:logSetting.showDebug = $true
 
 Write-Start
-
-Write-Log "Importing Data"
-$data = Get-Content "input.txt"
+$data = Load-Input
 
 Write-Log "Parsing input data"
 $gameData = @{}
@@ -123,13 +87,5 @@ foreach($gameID in $games)
     }
 }
 
-Write-Log "Summing Game IDs"
-$gameSum = 0
-foreach($val in $matchesGames)
-{
-    $gameSum += $val
-}
-
-Write-Success "AoC Day 2-1 Answer: ${gameSum}"
-
+Get-Answer $matchesGames
 Write-End
