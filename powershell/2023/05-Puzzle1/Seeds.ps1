@@ -9,6 +9,7 @@
 
 # File Imports
 . "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
+. "$($PSScriptRoot)\lib\LocalLib.ps1"
 
 # Global Varible Setting
 $global:AoC.puzzle = "5-1"
@@ -16,35 +17,6 @@ $global:AoC.testInputMode = $false
 
 $global:logSetting.fileOutput = $true
 $global:logSetting.showDebug = $true
-#=======================================
-
-# Local Functions
-function Mapping-Lookup($map,$mapKey)
-{
-    $keys = $map.Keys | Sort-Object
-    $pos = 0
-    for($keyIter = 0; $keyIter -lt $keys.length; $keyIter += 1)
-    {
-        if($mapKey -ge ($keys[$pos] + (String-To-Int($map[$keys[$pos]][1]))))
-        {
-            $pos = $keyIter
-        }
-        else
-        {
-            $keyIter = $keys.length
-        }
-    }
-
-    $mappedVal = $mapKey
-    $diff = ((String-To-Int($mapKey)) - (String-To-Int($keys[$pos])))
-    if($diff -lt (String-To-Int($map[$keys[$pos]][1])) -and $diff -ge 0)
-    {
-        $mappedVal = (String-To-Int($map[$keys[$pos]][0])) + ((String-To-Int($mapKey)) - (String-To-Int($keys[$pos])))
-    }
-
-    return $mappedVal
-}
-
 #=======================================
 
 Write-Start
