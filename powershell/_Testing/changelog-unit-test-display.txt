@@ -1,0 +1,9 @@
+1.0.1 - 12-06-2024
+
+- removed commented code from javascript. added summary to links
+
+1.0.0 - 11-06-2024
+
+- created ui to display test results and json compilers for it
+
+

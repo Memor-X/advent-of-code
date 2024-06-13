@@ -1,0 +1,15 @@
+1.0.2 - 12-06-2024
+
+- removed clearing of screen output for test compiler
+- fixed bug in test results compiler when only 1 test file is used (not considered an array). added Testing Pre-Build Script
+
+1.0.1 - 11-06-2024
+
+- fixed bug in test results compiler when only 1 test file is used (not considered an array). added Testing Pre-Build Script
+
+1.0.0 - 07-06-2024
+
+- created Powershell Tester that uses Pester. created some tests for Common Library
+- created json compiler for web UI
+
+

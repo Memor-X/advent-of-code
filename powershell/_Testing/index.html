@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="./results/Compiled-Coverage_data.js"></script>
+        <script src="./results/Compiled-Test_data.js"></script>
+        <link rel="stylesheet" href="main.css">
+    </head>
+    <body>
+        <h1>Unit Test Display</h1>
+        <div>
+            <h2>Files</h2>
+            <div id="file-list"></div>
+        </div>
+        <div id="test-result">
+            <h2>Test Results</h2>
+            <div id="test-collection"></div>
+        </div>
+        <div id="code-coverage">
+            <h2>Code Coverage</h2>
+            <div id="coverage-collection"></div>
+        </div>
+    </body>
+    <script>
+        function addAttributes(node,attributes)
+        {
+            for(let attribI = 0; attribI < attributes.length; attribI += 1)
+            {
+                node.setAttribute(attributes[attribI].name,attributes[attribI].val)
+            }
+
+            return node
+        }
+        /* eg
+            rowData = {
+                cells: [
+                    {
+                        val: "cell text"
+                        attribs: [
+                            {
+                                name: "data-test-type"
+                                val: "test"
+                            }
+                        ]
+                    }
+                ]
+                rowType: "td"
+                rowAttribs: [
+                    {
+                        name: "data-test-type"
+                        val: "test"
+                    }
+                ]
+            }
+        */
+        function createTableRow(tableNode,rowData)
+        {
+            let newRow = document.createElement("tr");
+            if(rowData.rowAttribs !== undefined)
+            {
+                newRow = addAttributes(newRow,rowData.rowAttribs)
+            }
+
+            for(let iter = 0; iter < rowData.cells.length; iter += 1)
+            {
+                let newCell = document.createElement(rowData.rowType);
+                newCell.appendChild(document.createTextNode(rowData.cells[iter].val));
+
+                if(rowData.cells[iter].attribs !== undefined)
+                {
+                    newCell =addAttributes(newCell,rowData.cells[iter].attribs)
+                }
+
+                newRow.appendChild(newCell)
+            }
+
+            tableNode.appendChild(newRow)
+
+            return tableNode
+        }
+
+        function createTestRow(testData, testCases, level = 0)
+        {
+            let paddingPrefix = "----"
+            let paddingLength = (paddingPrefix.length * level)
+            let testType = testData.type
+            let rowType = "th"
+            if(testData.type == "test-case")
+            {
+                rowType = "td"
+            }
+
+            let nameLength = testData.name.length
+            let testName = (" "+testData.name).padStart(nameLength+paddingLength+1, paddingPrefix)
+
+            let testRowData = {
+                cells: [
+                    {val: testName},
+                    {val: testData.result},
+                    {val: testData.time},
+                ],
+                rowType: rowType,
+                rowAttribs: [
+                    {name: "data-result",val: testData.result},
+                    {name: "data-test-type",val:testData.type}
+                ]
+            }
+            testCases = createTableRow(testCases,testRowData)
+
+            if(testData.type == "test-suite")
+            {
+                for(let l = 0; l < testData["tests"].length; l++)
+                {
+                    testCases = createTestRow(testData["tests"][l], testCases, level+1)
+                }
+            }
+
+            return testCases
+        }
+
+        var fileLink = document.createElement("ul");
+
+        for(var i = 0; i < testData["test-suites"].length; i++) 
+        {
+            let testSuiteData = testData["test-suites"][i]
+            let file = testData["test-suites"][i].file
+
+            let fileItem = document.createElement("li");
+            fileItem.appendChild(document.createTextNode("["));
+            let testLink = document.createElement("a");
+            testLink.href = "#test_"+file
+            testLink.setAttribute("class","test-link")
+            testLink.appendChild(document.createTextNode("T"));
+            fileItem.appendChild(testLink)
+            fileItem.appendChild(document.createTextNode("]"))
+
+            fileItem.appendChild(document.createTextNode(" | "));
+
+            fileItem.appendChild(document.createTextNode("["));
+            let coverageLink = document.createElement("a");
+            coverageLink.href = "#coverage_"+file
+            coverageLink.setAttribute("class","coverage-link")
+            coverageLink.appendChild(document.createTextNode("C"));
+            fileItem.appendChild(coverageLink)
+            fileItem.appendChild(document.createTextNode("] "+file))
+            
+            fileLink.appendChild(fileItem)
+
+            let testSuite = document.createElement("div");
+            testSuite.setAttribute("id","test_"+file)
+
+            let testSuiteHeading = document.createElement("h3");
+            testSuiteHeading.appendChild(document.createTextNode(file));
+            testSuite.appendChild(testSuiteHeading)
+
+            let testCases = document.createElement("table");
+
+            let testRowData = {
+                cells: [
+                    {val: "Name"},
+                    {val: "Result"},
+                    {val: "Run Time"},
+                ],
+                rowType: "th"
+            }
+            testCases = createTableRow(testCases,testRowData)
+
+            for(let j = 0; j < testSuiteData["test-cases"].length; j++)
+            {
+                let testCollectionData = testSuiteData["test-cases"][j]
+
+                let functionRowData = {
+                    cells: [
+                        {val: testCollectionData.name},
+                        {val: testCollectionData.result},
+                        {val: testCollectionData.time},
+                    ],
+                    rowType: "th",
+                    rowAttribs: [
+                        {name: "data-result",val: testCollectionData.result}
+                    ]
+                }
+                testCases = createTableRow(testCases,functionRowData)
+
+                for(let k = 0; k < testCollectionData["tests"].length; k++)
+                {
+                    let testData = testCollectionData["tests"][k]
+                    testCases = createTestRow(testData, testCases)
+                }
+            }
+
+            let returnLink = document.createElement("a");
+            returnLink.href = "#file-list"
+            returnLink.appendChild(document.createTextNode("^ Return to Top"));
+            testSuite.appendChild(testCases);
+            testSuite.appendChild(returnLink);
+
+            const element = document.getElementById("test-collection");
+            element.appendChild(testSuite);
+        }
+
+        const fileList = document.getElementById("file-list");
+        fileList.appendChild(fileLink);
+
+        for(var i = 0; i < coverageData["test-suites"].length; i++) 
+        {
+            let coverageSuiteData = coverageData["test-suites"][i]
+            let file = coverageData["test-suites"][i].name
+
+            let coverageSuite = document.createElement("div");
+            coverageSuite.setAttribute("id","coverage_"+file)
+
+            let coverageSuiteHeading = document.createElement("h3");
+            coverageSuiteHeading.appendChild(document.createTextNode(file));
+            coverageSuite.appendChild(coverageSuiteHeading)
+
+            let functionsTable = document.createElement("table");
+
+            let coverageRowData = {
+                cells: [
+                    {val: "Name"},
+                    {val: "Line Number"},
+                    {val: "Instructions Covered"},
+                    {val: "Instructions Missed"},
+                    {val: "Lines Covered"},
+                    {val: "Lines Missed"},
+                    {val: "Methods Covered"},
+                    {val: "Methods Missed"},
+                ],
+                rowType: "th"
+            }
+            functionsTable = createTableRow(functionsTable,coverageRowData)
+
+            for(var j = 0; j < coverageSuiteData["functions"].length; j++) 
+            {
+                let functionData = coverageSuiteData["functions"][j]
+
+                let rowCheck = ""
+                if(parseInt(functionData["instructions"]["missed"]) == 0 && parseInt(functionData["lines"]["missed"]) == 0 && parseInt(functionData["methods"]["missed"]) == 0)
+                {
+                    rowCheck = "Success"
+                }
+                else if(parseInt(functionData["instructions"]["covered"]) == 0 && parseInt(functionData["lines"]["covered"]) == 0 && parseInt(functionData["methods"]["covered"]) == 0)
+                {
+                    rowCheck = "Failure"
+                }
+                else
+                {
+                    rowCheck = "Partial"
+                }
+
+                let coverageRowData = {
+                    cells: [
+                        {val: functionData.name},
+                        {val: functionData["line no"]},
+                        {val: functionData["instructions"]["covered"]},
+                        {val: functionData["instructions"]["missed"]},
+                        {val: functionData["lines"]["covered"]},
+                        {val: functionData["lines"]["missed"]},
+                        {val: functionData["methods"]["covered"]},
+                        {val: functionData["methods"]["missed"]},
+                    ],
+                    rowType: "td",
+                    rowAttribs: [
+                        {name: "data-result",val: rowCheck},
+                        {name: "data-test-type",val: "code-case"}
+                    ]
+                }
+                functionsTable = createTableRow(functionsTable,coverageRowData)
+            }
+
+            let returnLink = document.createElement("a");
+            returnLink.href = "#file-list"
+            returnLink.appendChild(document.createTextNode("^ Return to Top"));
+            coverageSuite.appendChild(functionsTable);
+
+            let linesTable = document.createElement("table");
+
+            let linesRowData = {
+                cells: [
+                    {val: ""},
+                    {val: "Line Number"},
+                    {val: "Instructions Covered"},
+                    {val: "Instructions Missed"},
+                    {val: "Branches Covered"},
+                    {val: "Branches Missed"},
+                    {val: ""},
+                    {val: ""},
+                ],
+                rowType: "th"
+            }
+            linesTable = createTableRow(linesTable,linesRowData)
+
+            for(var j = 0; j < coverageSuiteData["lines"].length; j++) 
+            {
+                let lineData = coverageSuiteData["lines"][j]
+
+                let rowCheck = ""
+                if(parseInt(lineData["instructions"]["missed"]) == 0 && parseInt(lineData["branches"]["missed"]) == 0)
+                {
+                    rowCheck = "Success"
+                }
+                else if(parseInt(lineData["instructions"]["covered"]) == 0 && parseInt(lineData["branches"]["covered"]) == 0)
+                {
+                    rowCheck = "Failure"
+                }
+                else
+                {
+                    rowCheck = "Partial"
+                }
+
+                let linesRowData = {
+                    cells: [
+                        {val: ""},
+                        {val: lineData["line number"]},
+                        {val: lineData["instructions"]["covered"]},
+                        {val: lineData["instructions"]["missed"]},
+                        {val: lineData["branches"]["covered"]},
+                        {val: lineData["branches"]["missed"]},
+                        {val: ""},
+                        {val: ""},
+                    ],
+                    rowType: "td",
+                    rowAttribs: [
+                        {name: "data-result",val: rowCheck},
+                        {name: "data-test-type",val: "line-case"}
+                    ]
+                }
+                linesTable = createTableRow(linesTable,linesRowData)
+            }
+
+            coverageSuite.appendChild(linesTable);
+            coverageSuite.appendChild(returnLink);
+
+            const element = document.getElementById("coverage-collection");
+            element.appendChild(coverageSuite);
+        }
+
+        var classes = [
+            {"links-class":".test-link","test-type":"test-case","text":"T"},
+            {"links-class":".coverage-link","test-type":"line-case","text":"C"}
+        ]
+        for(var c = 0; c < classes.length; c++)
+        {
+            let links = document.querySelectorAll(classes[c]["links-class"])
+            for(var i = 0; i < links.length; i++)
+            {
+                let linkID = "#"+links[i].href.split("#")[1].replaceAll("/","\\/").replaceAll(".","\\.").replaceAll(":","\\:").replaceAll("%20","\\ ")
+                let testsuite = document.querySelector(linkID)
+                
+                let fails = testsuite.querySelectorAll('tr[data-test-type="'+classes[c]["test-type"]+'"][data-result="Failure"]').length
+                let passes = testsuite.querySelectorAll('tr[data-test-type="'+classes[c]["test-type"]+'"][data-result="Success"]').length
+                let partials = testsuite.querySelectorAll('tr[data-test-type="'+classes[c]["test-type"]+'"][data-result="Partial"]').length
+                let total = (fails + passes + partials).toString().padStart(3,'0')
+                
+                let classStr = ""
+                if(fails > 0)
+                {
+                    classStr = "fail"
+                }
+                
+                links[i].innerHTML = classes[c]["text"]+" | T: "+total+" S: "+passes.toString().padStart(3,'0')+" <span class='"+classStr+"'>F: "+fails.toString().padStart(3,'0')+"</span> P:"+partials.toString().padStart(3,'0')
+            }
+        }
+    </script>
+</html>

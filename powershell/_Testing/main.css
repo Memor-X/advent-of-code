@@ -1,0 +1,66 @@
+th, td {
+    border: 1px solid;
+    padding: 0 5px 0 5px;
+}
+
+tr[data-test-type="test-suite"]{
+    text-align: left;
+}
+
+.test-link .fail, .coverage-link .fail{
+    font-weight: bolder;
+    color: #FF0000;
+}
+
+/* Test Results Table */
+#test-collection td:nth-child(1), #test-collection th:nth-child(1){
+    width: 700px;
+}
+#test-collection td:nth-child(2), #test-collection th:nth-child(2){
+    width: 70px;
+}
+#test-collection td:nth-child(3), #test-collection th:nth-child(3){
+    width: 90px;
+}
+
+/* Code Coverage Table*/
+#coverage-collection td:nth-child(1), #coverage-collection th:nth-child(1){
+    width: 230px;
+}
+#coverage-collection td:nth-child(2), #coverage-collection th:nth-child(2){
+    width: 116px;
+}
+#coverage-collection td:nth-child(3), #coverage-collection th:nth-child(3){
+    width: 168px;
+}
+#coverage-collection td:nth-child(4), #coverage-collection th:nth-child(4){
+    width: 158px;
+}
+#coverage-collection td:nth-child(5), #coverage-collection th:nth-child(5){
+    width: 140px;
+}
+#coverage-collection td:nth-child(6), #coverage-collection th:nth-child(6){
+    width: 120px;
+}
+#coverage-collection td:nth-child(7), #coverage-collection th:nth-child(7){
+    width: 144px;
+}
+#coverage-collection td:nth-child(8), #coverage-collection th:nth-child(8){
+    width: 154px;
+}
+
+/* Results Highlighting */
+tr[data-result="Success"]{
+    background-color: #b2feb2;
+    color: #016401;
+}
+
+tr[data-result="Failure"]{
+    background-color: #feb2b2;
+    color: #640101;
+}
+
+tr[data-result="Partial"]{
+    background-color: #feebb2;
+    color: #644b01;
+}

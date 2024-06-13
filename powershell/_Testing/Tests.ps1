@@ -22,6 +22,7 @@ $config = New-PesterConfiguration
 
 $config.CodeCoverage.Enabled = $true
 $config.CodeCoverage.OutputPath = "$($PSScriptRoot)\results\coverage.xml"
+$config.CodeCoverage.OutputFormat = "CoverageGutters"
 $config.CodeCoverage.CoveragePercentTarget = 90
 
 $config.TestResult.Enabled = $true
