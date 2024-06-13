@@ -7,19 +7,19 @@
 #
 ########################################
 
-# file imports
-. "$($PSScriptRoot)\..\..\lib\Common.ps1"
-$logSetting.fileOutput = $true
-#---------------------------------------
+# File Imports
+. "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
+. "$($PSScriptRoot)\lib\LocalLib.ps1"
 
-# Local Function
+# Global Varible Setting
+$global:AoC.puzzle = "3-1"
+$global:AoC.testInputMode = $false
 
-#---------------------------------------
+$global:logSetting.fileOutput = $true
+$global:logSetting.showDebug = $true
 
 Write-Start
-
-Write-Log "Importing Data"
-$data = Get-Content "input.txt"
+$data = Load-Input
 
 # Write-Debug (Gen-Block "Input Data" $data)
 
@@ -107,13 +107,5 @@ for($i = 0; $i -lt $data.Length; $i += 1)
     }
 }
 
-Write-Log "Summing Part Numbers"
-$sum = 0
-foreach($val in $parts)
-{
-    $sum += $val
-}
-
-Write-Success "AoC Day 3-1 Answer: ${sum}"
-
+Get-Answer $parts
 Write-End

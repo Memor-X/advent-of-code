@@ -9,6 +9,7 @@
 
 # file imports
 . "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
+. "$($PSScriptRoot)\lib\LocalLib.ps1"
 
 # Global Varible Setting
 $global:AoC.puzzle = "3-2"
