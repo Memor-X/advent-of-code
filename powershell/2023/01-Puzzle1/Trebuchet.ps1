@@ -8,40 +8,26 @@
 ########################################
 
 # File Imports
-. "$($PSScriptRoot)\..\..\lib\Common.ps1"
+. "$($PSScriptRoot)\..\..\lib\AdventOfCode.ps1"
+. "$($PSScriptRoot)\lib\LocalLib.ps1"
 
-# Local Function
-function Get-Calibration($str)
-{
-    $calNum = ""
+# Global Varible Setting
+$global:AoC.puzzle = "1-1"
+$global:AoC.testInputMode = $false
 
-    $extractedNum = ($str -replace "[^0-9]" , '').ToString()
-    $calNum = "$($extractedNum[0])$($extractedNum.substring($extractedNum.length - 1))"
-
-    return $calNum
-}
+$global:logSetting.fileOutput = $true
+$global:logSetting.showDebug = $true
 
 Write-Start
-
-Write-Log "Importing Data"
-$data = Get-Content "input.txt"
-#Write-Debug (Gen-Block "Imported Data" $data)
+$data = Load-Input
 
 Write-Log "Extracting Number"
 $calArr = @()
 foreach($line in $data)
 {
-    $calArr += @([int](Get-Calibration $line))
+    $calArr += @((Get-Calibration $line))
 }
 #Write-Debug (Gen-Block "Calibration Data" $calArr)
 
-Write-Log "Summing Calibration Values"
-$calSum = 0
-foreach($val in $calArr)
-{
-    $calSum += $val
-}
-
-Write-Success "AoC Day 1-1 Answer: ${calSum}"
-
+Get-Answer $calArr
 Write-End
