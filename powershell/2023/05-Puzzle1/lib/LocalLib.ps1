@@ -17,7 +17,7 @@
 
 function Mapping-Lookup($map,$mapKey)
 {
-    $keys = $map.Keys | Sort-Object
+    $keys = $map.Keys | Sort-Object {String-To-Int $_}
     $pos = 0
     for($keyIter = 0; $keyIter -lt $keys.length; $keyIter += 1)
     {
@@ -35,7 +35,7 @@ function Mapping-Lookup($map,$mapKey)
     $diff = ((String-To-Int($mapKey)) - (String-To-Int($keys[$pos])))
     if($diff -lt (String-To-Int($map[$keys[$pos]][1])) -and $diff -ge 0)
     {
-        $mappedVal = (String-To-Int($map[$keys[$pos]][0])) + ((String-To-Int($mapKey)) - (String-To-Int($keys[$pos])))
+        $mappedVal = (String-To-Int($map[$keys[$pos]][0])) + $diff
     }
 
     return $mappedVal
