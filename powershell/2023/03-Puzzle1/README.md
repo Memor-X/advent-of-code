@@ -31,6 +31,15 @@ In this schematic, two numbers are **not** part numbers because they are not adj
 
 Of course, the actual engine schematic is much larger. **What is the sum of all of the part numbers in the engine schematic?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 0 | <span style="color:green">100%</span> |
+| **Total** | 0 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. Load data into array
 2. loop though each line

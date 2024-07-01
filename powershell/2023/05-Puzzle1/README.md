@@ -105,6 +105,15 @@ So, the lowest location number in this example is 35.
 
 What is the lowest location number that corresponds to any of the initial seed numbers?
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 8 | <span style="color:green">100%</span> |
+| **Total** | 8 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. Load data into array
 2. for each line (starting at Line 2)

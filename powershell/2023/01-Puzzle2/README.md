@@ -18,6 +18,15 @@ In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Addi
 
 **What is the sum of all of the calibration values?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 7 | <span style="color:green">100%</span> |
+| **Total** | 7 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 using Part 1's Solution. inside Input Loop processing
 1. find first and last instance of worded numbers

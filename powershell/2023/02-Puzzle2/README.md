@@ -24,6 +24,15 @@ The **power** of a set of cubes is equal to the numbers of red, green, and blue 
 
 For each game, find the minimum set of cubes that must have been present. **What is the sum of the power of these sets?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 6 | <span style="color:green">100%</span> |
+| **Total** | 6 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 - Importing Data
 No change

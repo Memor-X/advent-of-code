@@ -13,6 +13,15 @@ In the above example, the lowest location number can be obtained from seed numbe
 
 Consider all of the initial seed numbers listed in the ranges on the first line of the almanac. **What is the lowest location number that corresponds to any of the initial seed numbers?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 132 | <span style="color:green">100%</span> |
+| **Total** | 132 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 data import remains the same
 

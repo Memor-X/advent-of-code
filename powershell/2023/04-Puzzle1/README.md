@@ -37,6 +37,15 @@ So, in this example, the Elf's pile of scratchcards is worth **13** points.
 
 Take a seat in the large pile of colorful cards. **How many points are they worth in total?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 0 | <span style="color:green">100%</span> |
+| **Total** | 0 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. Load data into array
 2. for each line

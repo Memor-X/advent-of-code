@@ -25,6 +25,15 @@ In this example, the calibration values of these four lines are 12, 38, 15, and 
 
 Consider your entire calibration document. **What is the sum of all of the calibration values?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 4 | <span style="color:green">100%</span> |
+| **Total** | 4 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. Load input into an array
 2. loop though each line

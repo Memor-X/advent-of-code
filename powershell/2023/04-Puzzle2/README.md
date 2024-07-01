@@ -31,6 +31,15 @@ Once all of the originals and copies have been processed, you end up with **1** 
 
 Process all of the original and copied scratchcards until no more scratchcards are won. Including the original set of scratchcards, **how many total scratchcards do you end up with?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 0 | <span style="color:green">100%</span> |
+| **Total** | 0 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. initalize array of 0's as size of the number of cards
 2. same as Puzzle 1 up until number of wins is calculated

@@ -28,6 +28,15 @@ In the example above, games 1, 2, and 5 would have been **possible** if the bag 
 
 Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. **What is the sum of the IDs of those games?**
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 6 | <span style="color:green">100%</span> |
+| **Total** | 6 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 - Importing Data
     1. create an empty hash object to store the game data

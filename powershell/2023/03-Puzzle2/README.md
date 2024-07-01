@@ -29,6 +29,15 @@ In this schematic, there are **two** gears. The first is in the top left; it has
 
 What is the sum of all of the gear ratios in your engine schematic?
 
+## --- Unit Testing ---
+
+Code Coverage Req: 90%
+
+| File | No. of Tests | Code Coverage |
+| :--- | :---: | ---: |
+| LocalLib.ps1 | 0 | <span style="color:green">100%</span> |
+| **Total** | 0 | <span style="color:green">100%</span> |
+
 ## --- Approach ---
 1. Load data into array
 2. loop though each line
