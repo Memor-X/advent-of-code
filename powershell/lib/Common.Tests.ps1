@@ -525,6 +525,28 @@ Describe 'Merge-Hash'{
 
 }
 
+Describe 'Compress-Spaces'{
+    BeforeEach{
+        Mock Create-Path {}
+        $global:fileOutputBuffer = @{}
+    }
+
+    It 'Compresses 1 instance of 2 spaces' {
+        $str = Compress-Spaces "Hello  World"
+        $str  | Should -Be "Hello World"
+    }
+
+    It 'Compresses 1 instance of 3 spaces' {
+        $str = Compress-Spaces "Hello  World"
+        $str  | Should -Be "Hello World"
+    }
+
+    It 'Compresses multiple instances of multis spaces' {
+        $str = Compress-Spaces "Hello   Big   Wide    World"
+        $str  | Should -Be "Hello Big Wide World"
+    }
+}
+
 Describe 'Append-File'{
     BeforeEach{
         Mock Create-Path {}

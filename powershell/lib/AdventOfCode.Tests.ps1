@@ -109,16 +109,13 @@ Describe 'Get-Answer'{
         $AoC.inputFile_Extra = ""
     }
 
-    It 'Get Sum' {
-        $col = @(1,2,3,4,5)
-        Get-Answer $col
-        $outputBuffer."screen"[$outputBuffer."screen".length-1].msg | Should -Be "[SUCCESS] 01/01/2000 11:10 | AoC Day 0-0 Answer: 15"
-    }
-
-    It 'Get Min' {
-        $col = @(3,1,10,4,5)
-        Get-Answer $col "min"
-        $outputBuffer."screen"[$outputBuffer."screen".length-1].msg | Should -Be "[SUCCESS] 01/01/2000 11:10 | AoC Day 0-0 Answer: 1"
+    It 'Get Calculation <calc>, should return <answer>' -TestCases @(
+        @{calc = 'sum'; col = @(1,2,3,4,5); answer = 15}
+        @{calc = 'min'; col = @(3,1,10,4,5); answer = 1}
+        @{calc = 'prod'; col = @(1,2,3,4,5); answer = 120}
+    ){
+        Get-Answer $col $calc
+        $outputBuffer."screen"[$outputBuffer."screen".length-1].msg | Should -Be "[SUCCESS] 01/01/2000 11:10 | AoC Day 0-0 Answer: $($answer)"
     }
 
     It 'Puzzle Number Updates' {

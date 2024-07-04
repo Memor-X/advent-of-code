@@ -384,6 +384,25 @@ function Merge-Hash($hash1,$hash2)
 }
 
 ########################################
+#
+# Name:		Compress-Spaces
+# Input:	$string <String>
+# Output:	$returnStr <Various>
+# Description:	
+#	Converts multi-spaces in a provided string to be single spaces
+#
+########################################
+function Compress-Spaces($string,$hash2)
+{
+    $returnStr  = $string
+    while(($returnStr -like "*  *") -eq $true)
+    {
+        $returnStr = $returnStr.Replace("  "," ")
+    }
+    return $returnStr
+}
+
+########################################
 # File I/O
 ########################################
 ########################################

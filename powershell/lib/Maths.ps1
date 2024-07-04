@@ -69,3 +69,22 @@ function Max($vals)
     }
     return $max
 }
+
+########################################
+#
+# Name:		Product
+# Input:	$vals <Array>
+# Output:	$prod <Integer>
+# Description:	
+#	loops though values in the provided array and multiples each number
+#
+########################################
+function Product($vals)
+{
+    $prod = [int]$vals[0]
+    for($i = 1; $i -lt $vals.length; $i += 1)
+    {
+        $prod *= [int]$vals[$i]
+    }
+    return $prod
+}

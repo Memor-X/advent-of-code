@@ -97,6 +97,11 @@ function Get-Answer($collection,$calc="sum")
             $answer = (Min $collection)
             break
         }
+        "prod"
+        {
+            $answer = (Product $collection)
+            break
+        }
     }
     
 
