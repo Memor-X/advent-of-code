@@ -58,7 +58,7 @@ Describe 'Mapping-Lookup' {
         }
 
 
-    Describe 'AoC example' {
+    Context 'AoC example' {
         BeforeEach {
             $mapping = @{
                 "seed-to-soil" = @{

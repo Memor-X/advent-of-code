@@ -57,7 +57,7 @@ Describe 'Compile-Input-Data' {
         $outputBuffer."screen" = @()
     }
 
-    Describe 'Creating 1 mappping' {
+    Context 'Creating 1 mappping' {
         BeforeEach {
             $inputData = @(
                 "seeds",
@@ -85,7 +85,7 @@ Describe 'Compile-Input-Data' {
         }
     }
 
-    Describe 'Creates 2 mapppings' {
+    Context 'Creates 2 mapppings' {
         BeforeEach {
             $inputData = @(
                 "seeds",
@@ -117,7 +117,7 @@ Describe 'Compile-Input-Data' {
         }
     }
 
-    Describe 'Gap Filling' {
+    Context 'Gap Filling' {
         BeforeEach {
             $inputData = @(
                 "seeds",
@@ -145,7 +145,7 @@ Describe 'Compile-Input-Data' {
         }
     }
 
-    Describe '0 mapping' {
+    Context '0 mapping' {
         BeforeEach {
             $inputData = @(
                 "seeds",
@@ -179,7 +179,7 @@ Describe 'Mapping-Lookup' {
         $outputBuffer."screen" = @()
     }
 
-    Describe 'AoC example' {
+    Context 'AoC example' {
         BeforeEach {
             $mapping = @{
                 "seed-to-soil" = @{
@@ -296,7 +296,7 @@ Describe 'Get-Mapping-Range' {
         $outputBuffer."screen" = @()
     }
 
-    Describe 'Gets all mapped values in of fertilizer 6 of range 20' {
+    Context 'Gets all mapped values in of fertilizer 6 of range 20' {
         BeforeEach {
             $mapping = @{
                 "fertilizer-to-water" = @{
@@ -335,7 +335,7 @@ Describe 'Get-Mapping-Range' {
         }
     }
 
-    Describe 'Gets all mapped values in of fertilizer 6 of range 0' {
+    Context 'Gets all mapped values in of fertilizer 6 of range 0' {
         BeforeEach {
             $mapping = @{
                 "fertilizer-to-water" = @{
@@ -365,7 +365,7 @@ Describe 'Get-Mapping-Range' {
 
 Describe 'Scenario Testing' {
 
-    Describe 'Gets all mapped values in of fertilizer 57 of range 13' {
+    Context 'Gets all mapped values in of fertilizer 57 of range 13' {
         BeforeEach {
             $inputData = @(
                 "seeds",
@@ -421,7 +421,7 @@ Describe 'Scenario Testing' {
         }
     }
 
-    Describe 'Test Data Answer' {
+    Context 'Test Data Answer' {
         BeforeEach {
             $global:outputBuffer = @{}
             $outputBuffer."screen" = @()
@@ -463,7 +463,7 @@ Describe 'Scenario Testing' {
             $mapping = Compile-Input-Data $inputData
         }
 
-        Describe 'Error checking seed-to-soil' {
+        Context 'Error checking seed-to-soil' {
             It 'mapping seed-to-soil exists' {
                 $mapping.Contains("seed-to-soil") | Should -Be $true
             }
@@ -549,7 +549,7 @@ Describe 'Scenario Testing' {
                 $ranges[1].range | Should -Be $rangMapping2.range
             }
         }
-        Describe 'Error checking fertilizer-to-water' {
+        Context 'Error checking fertilizer-to-water' {
             It 'mapping fertilizer-to-water exists' {
                 $mapping.Contains("fertilizer-to-water") | Should -Be $true
             }
@@ -612,7 +612,7 @@ Describe 'Scenario Testing' {
             }
         }
 
-        Describe 'Error checking water-to-light' {
+        Context 'Error checking water-to-light' {
             It 'mapping water-to-light exists' {
                 $mapping.Contains("water-to-light") | Should -Be $true
             }
@@ -655,7 +655,7 @@ Describe 'Scenario Testing' {
             }
         }
 
-        Describe 'Test Answer known Map Path' {
+        Context 'Test Answer known Map Path' {
             It 'Seed 82 maps to Soil 84' {
                 $val = 82
                 $mappingGroup = "seed-to-soil"
