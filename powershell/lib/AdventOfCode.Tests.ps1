@@ -109,10 +109,21 @@ Describe 'Get-Answer'{
         $AoC.inputFile_Extra = ""
     }
 
-    It 'Get Calculation <calc>, should return <answer>' -TestCases @(
-        @{calc = 'sum'; col = @(1,2,3,4,5); answer = 15}
-        @{calc = 'min'; col = @(3,1,10,4,5); answer = 1}
-        @{calc = 'prod'; col = @(1,2,3,4,5); answer = 120}
+    It 'Get Calculation <calc> with <desc>, should return <answer>' -TestCases @(
+        @{calc = 'sum'; col = @(1,2,3,4,5); answer = 15; desc = "5 numbers"}
+        @{calc = 'sum'; col = @(1,2); answer = 3; desc = "2 numbers"}
+        @{calc = 'sum'; col = @(1); answer = 1; desc = "1 number"}
+        @{calc = 'min'; col = @(3,1,10,4,5); answer = 1; desc = "5 numbers"}
+        @{calc = 'min'; col = @(3,5); answer = 3; desc = "2 numbers"}
+        @{calc = 'min'; col = @(5); answer = 5; desc = "1 number"}
+        @{calc = 'prod'; col = @(1,2,3,4,5); answer = 120; desc = "5 numbers"}
+        @{calc = 'prod'; col = @(2,3); answer = 6; desc = "2 numbers"}
+        @{calc = 'prod'; col = @(3); answer = 3; desc = "1 number"}
+        @{calc = 'prod'; col = @(1,2,0,4,5); answer = 0; desc = "5 numebrs with 0"}
+        @{calc = 'prod'; col = @(0,0); answer = 0; desc = "2 0's"}
+        @{calc = 'static'; col = @(16); answer = 16; desc = "1 number in array"}
+        @{calc = 'static'; col = 16; answer = 16; desc = "1 number as integer"}
+        @{calc = 'static'; col = "16"; answer = 16; desc = "1 number as string"}
     ){
         Get-Answer $col $calc
         $outputBuffer."screen"[$outputBuffer."screen".length-1].msg | Should -Be "[SUCCESS] 01/01/2000 11:10 | AoC Day 0-0 Answer: $($answer)"

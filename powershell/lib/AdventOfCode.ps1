@@ -102,6 +102,11 @@ function Get-Answer($collection,$calc="sum")
             $answer = (Product $collection)
             break
         }
+        "static"
+        {
+            $answer = @($collection)[0]
+            break
+        }
     }
     
 
