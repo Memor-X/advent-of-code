@@ -1,4 +1,4 @@
-# advent-of-code
+# advent-of-code (ARCHIVED)
 Memor-X's Public Advent of Code Solutions
 
 ## 2023
